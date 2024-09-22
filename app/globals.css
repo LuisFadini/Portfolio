@@ -27,7 +27,7 @@ body {
 } */
 
 html {
-  @apply scroll-smooth hover:scrollbar-thumb-primary-500 scrollbar-thin scrollbar-thumb-rounded-full active:scrollbar-thumb-primary-400 scrollbar scrollbar-thumb-primary-600 scrollbar-track-background-800;
+  @apply scroll-smooth hover:scrollbar-thumb-primary-500 scrollbar-thin scrollbar-thumb-rounded-full active:scrollbar-thumb-primary-400 scrollbar-thumb-primary-600 scrollbar-track-background-800;
 }
 
 .animate-header-slide-down-fade {
