@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -23,5 +23,41 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+} */
+
+html {
+  @apply scroll-smooth hover:scrollbar-thumb-primary-500 scrollbar-thin scrollbar-thumb-rounded-full active:scrollbar-thumb-primary-400 scrollbar scrollbar-thumb-primary-600 scrollbar-track-background-800;
+}
+
+.animate-header-slide-down-fade {
+  animation: header-slide-down-fade 1s ease-in-out;
+}
+
+@keyframes header-slide-down-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-slide-up {
+  animation: hero-animation 1s ease-in-out;
+}
+
+@keyframes hero-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
