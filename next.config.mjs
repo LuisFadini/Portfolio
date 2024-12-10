@@ -1,4 +1,14 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {images: {domains: ["picsum.photos"]}};
+import createMDX from "@next/mdx";
 
-export default nextConfig;
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  pageExtensions: ["md", "mdx", "ts", "tsx"],
+  images: {
+    domains: ["picsum.photos"],
+  },
+};
+
+const withMDX = createMDX();
+
+export default withMDX(nextConfig);
+

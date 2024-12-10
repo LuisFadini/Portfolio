@@ -24,7 +24,7 @@ export default function Sobre() {
   ];
 
   return (
-    <>
+    <main>
       <h1 className="text-4xl font-bold text-center mt-2">Sobre mim</h1>
       {textSections.map(({ title, text, id }) => {
         return (
@@ -39,6 +39,6 @@ export default function Sobre() {
           </section>
         );
       })}
-    </>
+    </main>
   );
 }

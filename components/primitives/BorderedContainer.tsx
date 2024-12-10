@@ -1,19 +1,25 @@
-import { ClassNameValue, twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
+import { Slot } from "@radix-ui/react-slot";
 
-export interface DivProps {
-  children: React.ReactNode;
-  className?: ClassNameValue;
+interface BorderedContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  asChild?: boolean;
 }
 
-export function BorderedContainer(props: DivProps) {
+export function BorderedContainer({
+  asChild,
+  ...props
+}: BorderedContainerProps) {
+  const Comp = asChild ? Slot : "div";
+
   return (
-    <div
+    <Comp
       className={twMerge(
         "border border-background-700 p-4 rounded-lg",
         props.className
       )}
+      {...props}
     >
       {props.children}
-    </div>
+    </Comp>
   );
 }
