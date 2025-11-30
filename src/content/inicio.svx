@@ -1,0 +1,143 @@
+---
+title: Desenvolvendo meu site pessoal com Svelte e Tailwind
+slug: desenvolvendo-site-pessoal
+description: Um post explorando um pouco de como construir esse meu site pessoal utilizando uma techstack moderna de Svelte e Tailwind
+tags:
+  - svelte
+  - tailwind
+  - markdown
+  - desenvolvimento
+  - webdev
+imgSrc: /content/imagem-inicio.png
+updatedAt: '2025-11-15T18:55:00.000Z'
+createdAt: '2025-11-15T18:55:00.000Z'
+---
+
+<script lang="ts" module>
+  import GithubRepoCard from '$lib/components/GithubRepoCard.svelte';
+  import Center from '$lib/components/blog/Center.svelte';
+  
+  let contador = $state(0);
+	function incrementar() {
+		contador++;
+	}
+</script>
+
+Bom, esse é oficialmente o primeiro post do blog. Talvez não seja a melhor escrita do mundo, mas é um começo. Aqui vou falar um pouco sobre como desenvolvi esse site, as decisões técnicas que tomei e, ao longo do caminho, aproveitar para testar algumas funcionalidades do markdown e ver se tudo está renderizando corretamente.
+
+```js
+console.log('Olá mundo!');
+```
+
+---
+
+## Escolha da techstack
+
+Acredito que o famoso `Olá mundo!` seja sempre o primeiro passo. Para este site não foi diferente. Como gosto mais da área de backend, não tenho tanta experiência com frameworks frontend. Quase tudo que já fiz foi com React, Next.js ou até mesmo JavaScript e HTML puro, como dá pra ver em um dos meus projetos:
+
+<Center> <GithubRepoCard githubRepoUrl="https://github.com/luisfadini/Dino"></GithubRepoCard> </Center>
+
+Ou então na versão antiga do meu portfólio que nunca chegou a ir ao ar. No momento em que escrevo este artigo, ainda estou pensando se deixo ela pública ou não.
+
+Mas afinal, qual biblioteca escolhi? Depois de analisar opções como Vue, Solid (com o qual já tive uma experiência bem positiva) e Svelte, acabei escolhendo Svelte. Sempre vejo o Svelte sendo muito elogiado e cada vez mais adotado, inclusive por grandes sites como a App Store e o Spotify. E posso dizer que logo de cara já gostei bastante da experiência de desenvolvimento.
+
+Depois disso, pensei na parte de estilização. Considerei CSS puro, SASS ou TailwindCSS. CSS eu descartei na hora. SASS até considerei por ser algo que ainda não testei, mas no fim escolhi TailwindCSS, com o qual já tive ótimas experiências. Continuo achando excelente, é basicamente CSS em forma de classes, sem precisar ficar lidando com aquelas peculiaridades de comportamento dos diferentes navegadores.
+
+E, claro, para escrever os artigos do blog, markdown foi a melhor escolha possível. Criar várias páginas na mão com Svelte, ou qualquer framework, é completamente inviável a longo prazo. Depois de uns 20 ou 30 posts, você acaba com uma estrutura enorme e difícil de gerenciar, seja pra estilizar cada página ou criar componentes específicos.
+
+Para fazer o parse do markdown dentro do Svelte, usei o mdsvex, uma biblioteca que lembra bastante o MDX pela possibilidade de integrar componentes diretamente no markdown.
+
+---
+
+## Svelte
+
+Bom, como comentei no tópico anterior escolhi usar o Svelte, apesar de ter considerado as outras opções como o React ou HTML, mas não me leve a mal, chega de React, toda hora vemos falar de React daqui, React dali, React... Então pensei "Quer saber? Vou usar Svelte" e como ja disse que experiencia boa.
+
+Obviamente que para esse site poderia ter usado markdown e usar um script para converter para HTML usando o Unified, Remark e Rehype ou HUGO com um tema já pronto, que entregaria uma experiencia responsiva, sem trabalho nenhum de fazer isso do zero.
+
+Mas apesar disso, [luisfadini.com](https://luisfadini.com) é meu pequeno espaço na internet, então se você está aqui, aqui terá minhas opiniões e etc, então para fazer o meu pequeno espaço na internet ser do meu jeito, resolvi usar o Svelte, que acaba sendo uma biblioteca bem confortavel de se trabalhar. Olha esse exemplo de um contador simples:
+
+```svelte :line-numbers title="+page.svelte"
+<script>
+	let contador = $state(0);
+
+	function incrementar() {
+		contador++;
+	}
+</script>
+
+<button onclick={incrementar}>O valor é {contador}</button>
+
+<style>
+	button {
+		font-size: 1em;
+		background-color: blue;
+		padding: 4px;
+	}
+</style>
+```
+
+E assim está feito um contador funcional. Inclusive, aqui está ele:
+
+<div class="not-prose">
+  <button onclick={incrementar}>O valor é {contador}</button>
+
+  <style>
+    button {
+      font-size: 1em;
+      background-color: blue;
+      padding: 4px;
+      cursor: pointer;
+    }
+  </style>
+</div>
+
+<!-- Algo bem legal é definir o estilo, apesar do meu site estar usando Tailwind, o bacana das tags `<style>` no Svelte é elas só se aplicarem ao arquivo atual, a menos que use o seletor `:global`, que nunca tive a necessidade de usar, então não sei explicar muito bem seu funcionamento. -->
+
+<!-- Além disso utilizei o SvelteKit, que é como se fosse o Next.JS, permitindo criar rotas de api, otimizando SEO e etc, pense no Svelte como o React e o SvelteKit como o Next.JS. Tanto o Svelte quanto o SvelteKit são mantidos pela organização do Svelte no Github. -->
+
+Um detalhe que acho muito legal no Svelte é o escopo dos estilos. As regras dentro da tag `<style>` valem apenas para o componente/página atual, a menos que você use `:global`, que ai irá aplicar o estilo para componentes usados nessas página.
+
+Também utilizei o SvelteKit, que funciona mais ou menos como o Next.js, possibilita rotas de API, otimizações de SEO, SSR enfim. Dá pra pensar no Svelte como sendo o React e no SvelteKit como o Next.js nesse ecossistema.
+
+---
+
+## Tailwind
+
+Não tenho muito a comentar sobre o Tailwind, entre as escolhas que eu falei que era o CSS puro, SASS ou Tailwind, preferi ir na escolha mais pratica que seria o Tailwind, até pela facilidade que já possuo usando o Tailwind por facilitar o design para mobile, algo que não gosto tanto. Mesmo que o HTML fica verboso, mas só de já lidar com todo o trabalho de design em mobile, com media queries e etc.
+
+Apesar disso, não considero que o site tenha ficado bonito, mas acabei nesse estilo que está agora, um tema dark, não muito chamativo, algo feito mais por alguem que é focado no backend.
+
+Mesmo não sendo o Tailwind, faz parte do tema do site, que seria os icones, e bom os icones que utilizei foram do Iconify, pois ele reune aproximadamente 275k icones de diversos provedores diferentes, para os icones presentes nos textos e nos links sociais estou usando o icones do Phosphor e para icones de linguagens de programação estou usando o Material Icon Theme, o mesmo da extensão do VS Code.
+
+---
+
+## Markdown
+
+No começo, o site funcionava com `gray-matter` para separar metadata e conteúdo, e depois uma stack de Unified/Remark/Rehype para converter markdown em HTML. Eu tinha até criado um plugin pro Rehype que adicionava classes nas tags para estilização, mas no final percebi que o **tailwindcss-typography** já fazia esse trabalho muito bem com a classe `prose` e podendo personalizar um pouco, mesmo sendo um estilo ja definido.
+
+Mas como você já deve ter percebido ao longo do post, eu queria inserir componentes Svelte dentro dos artigos. Com Remark/Rehype gerando apenas HTML isso não funciona, precisaria de um preprocessor do SvelteKit para converter o código Svelte para HTML. Então abandonei essa stack e passei a usar somente:
+
+- `gray-matter` para extrair metadata
+- `mdsvex` como preprocessor
+
+Assim sendo possível o Svelte renderizar tudo como se fosse qualquer outra página do site.
+
+---
+
+## Fazendo o deploy
+
+Ainda preciso escrever essa parte
+
+---
+
+## Conclusão
+
+Bom, talvez tenha ficado um pouco confuso esse post, então vou resumir em umas simples lista:
+- Svelte
+- SvelteKit
+- Tailwind
+- Tailwind Typography
+- Iconify
+- mdsvex
+- Docker
