@@ -1,38 +1,49 @@
-# sv
+# Portfolio
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This repository contains my personal portfolio and blog website, built with [SvelteKit](https://svelte.dev/) and styled using [Tailwind CSS](https://tailwindcss.com/).
+Blog content is authored in Markdown and processed using [Mdsvex](https://mdsvex.pngwn.io/), enabling seamless integration of Svelte components within posts.
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Overview
 
-```sh
-# create a new project in the current directory
-npx sv create
+The site serves as my personal space on the internet for:
 
-# create a new project in my-app
-npx sv create my-app
-```
+- Showcasing personal projects and experience
+- Writing and sharing blog posts
+- Experimenting with web development tools
+- Testing features and workflows in a real project
 
-## Developing
+---
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Tech Stack
 
-```sh
-npm run dev
+- SvelteKit
+- Tailwind CSS
+- Mdsvex
+- TypeScript
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+---
 
-## Building
+## Features & Roadmap
 
-To create a production version of your app:
+### Completed
 
-```sh
-npm run build
-```
+- [x] Homepage
+- [x] Blog post layout and rendering
 
-You can preview the production build with `npm run preview`.
+### In Progress / Planned
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- [ ] Deploy to a VPS
+- [ ] Content localization
+- [ ] Comment system for blog posts
+- [ ] Sitemap generation
+- [ ] RSS feed
+- [ ] End-to-end testing
+- [ ] Storybook documentation
+
+---
+
+## License
+
+This project is released under the MIT License, check the [license file](LICENSE)
