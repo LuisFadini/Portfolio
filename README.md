@@ -3,8 +3,6 @@
 This repository contains my personal portfolio and blog website, built with [SvelteKit](https://svelte.dev/) and styled using [Tailwind CSS](https://tailwindcss.com/).
 Blog content is authored in Markdown and processed using [Mdsvex](https://mdsvex.pngwn.io/), enabling seamless integration of Svelte components within posts.
 
----
-
 ## Overview
 
 The site serves as my personal space on the internet for:
@@ -14,16 +12,12 @@ The site serves as my personal space on the internet for:
 - Experimenting with web development tools
 - Testing features and workflows in a real project
 
----
-
 ## Tech Stack
 
 - SvelteKit
 - Tailwind CSS
 - Mdsvex
 - TypeScript
-
----
 
 ## Features & Roadmap
 
@@ -41,8 +35,6 @@ The site serves as my personal space on the internet for:
 - [ ] RSS feed
 - [ ] End-to-end testing
 - [ ] Storybook documentation
-
----
 
 ## License
 
