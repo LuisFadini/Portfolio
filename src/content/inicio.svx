@@ -9,7 +9,7 @@ tags:
   - desenvolvimento
   - webdev
 imgSrc: /content/imagem-inicio.png
-updatedAt: '2025-11-15T18:55:00.000Z'
+updatedAt: '2025-11-30T20:25:00.000Z'
 createdAt: '2025-11-15T18:55:00.000Z'
 ---
 
@@ -91,10 +91,6 @@ E assim está feito um contador funcional. Inclusive, aqui está ele:
     }
   </style>
 </div>
-
-<!-- Algo bem legal é definir o estilo, apesar do meu site estar usando Tailwind, o bacana das tags `<style>` no Svelte é elas só se aplicarem ao arquivo atual, a menos que use o seletor `:global`, que nunca tive a necessidade de usar, então não sei explicar muito bem seu funcionamento. -->
-
-<!-- Além disso utilizei o SvelteKit, que é como se fosse o Next.JS, permitindo criar rotas de api, otimizando SEO e etc, pense no Svelte como o React e o SvelteKit como o Next.JS. Tanto o Svelte quanto o SvelteKit são mantidos pela organização do Svelte no Github. -->
 
 Um detalhe que acho muito legal no Svelte é o escopo dos estilos. As regras dentro da tag `<style>` valem apenas para o componente/página atual, a menos que você use `:global`, que ai irá aplicar o estilo para componentes usados nessas página.
 
