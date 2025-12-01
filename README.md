@@ -25,13 +25,13 @@ The site serves as my personal space on the internet for:
 
 - [x] Homepage
 - [x] Blog post layout and rendering
+- [x] Sitemap generation
 
 ### In Progress / Planned
 
 - [ ] Deploy to a VPS
 - [ ] Content localization
 - [ ] Comment system for blog posts
-- [ ] Sitemap generation
 - [ ] RSS feed
 - [ ] End-to-end testing
 - [ ] Storybook documentation
