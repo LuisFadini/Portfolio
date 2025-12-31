@@ -2,7 +2,9 @@ FROM node:25-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
 COPY pnpm*.yaml ./
-RUN corepack enable
+
+RUN npm install -g pnpm@latest-10
+
 RUN pnpm install
 COPY . .
 RUN pnpm run build
