@@ -26,10 +26,10 @@ The site serves as my personal space on the internet for:
 - [x] Homepage
 - [x] Blog post layout and rendering
 - [x] Sitemap generation
+- [x] Deploy to a VPS
 
 ### In Progress / Planned
 
-- [ ] Deploy to a VPS
 - [ ] Content localization
 - [ ] Comment system for blog posts
 - [ ] RSS feed
