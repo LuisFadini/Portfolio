@@ -8,8 +8,9 @@ tags:
   - markdown
   - desenvolvimento
   - webdev
+  - docker
 imgSrc: /content/imagem-inicio.png
-updatedAt: '2025-11-30T20:25:00.000Z'
+updatedAt: '2026-01-01T05:45:00.000Z'
 createdAt: '2025-11-15T18:55:00.000Z'
 ---
 
@@ -55,7 +56,7 @@ Bom, como comentei no tópico anterior escolhi usar o Svelte, apesar de ter cons
 
 Obviamente que para esse site poderia ter usado markdown e usar um script para converter para HTML usando o Unified, Remark e Rehype ou HUGO com um tema já pronto, que entregaria uma experiencia responsiva, sem trabalho nenhum de fazer isso do zero.
 
-Mas apesar disso, [luisfadini.com](https://luisfadini.com) é meu pequeno espaço na internet, então se você está aqui, aqui terá minhas opiniões e etc, então para fazer o meu pequeno espaço na internet ser do meu jeito, resolvi usar o Svelte, que acaba sendo uma biblioteca bem confortavel de se trabalhar. Olha esse exemplo de um contador simples:
+Mas apesar disso, [luisfadini.com](https://luisfadini.com) é meu pequeno espaço na internet, então se você está aqui, aqui terá minhas opiniões e etc, então para fazer o meu pequeno espaço na internet ser do meu jeito, resolvi usar o Svelte, que acaba sendo uma biblioteca bem confortável de se trabalhar. Olha esse exemplo de um contador simples:
 
 ```svelte :line-numbers title="+page.svelte"
 <script>
@@ -123,13 +124,89 @@ Assim sendo possível o Svelte renderizar tudo como se fosse qualquer outra pág
 
 ## Fazendo o deploy
 
-Ainda preciso escrever essa parte
+Para o deploy, escolhi usar Docker. Ele é bastante universal e funciona em praticamente qualquer servidor. Para isso, criei um Dockerfile com multi-stage build, dividido em duas etapas.
+
+Na primeira etapa (builder), o container é responsável por instalar as dependências e fazer a build do projeto. Na segunda, usando a imagem node:25-alpine, eu apenas rodo a aplicação com o mínimo necessário, o que ajuda a reduzir um pouco o tamanho da imagem final.
+
+O ideal, provavelmente, seria usar uma imagem distroless, algo que posso fazer em um próximo passo. Caso queira ver o Dockerfile completo, é só clicar aqui: [Dockerfile](https://github.com/LuisFadini/personal-website/blob/62e6924800b6f86f6443089d520bc8b3990b22e7/Dockerfile).
+
+```dockerfile
+FROM node:25-alpine AS builder
+# comandos específicos de build
+
+FROM node:25-alpine
+WORKDIR /app
+COPY --from=builder /app/build build/
+COPY --from=builder /app/node_modules node_modules/
+# rodar o projeto
+```
+
+Além disso, para hospedar o projeto, utilizei o free tier do Google Cloud Platform. Nesse plano, eles oferecem uma instância e2-micro, com 2 vCPUs compartilhadas, 1 GB de RAM e apenas 1 GB de tráfego outbound por mês, sim, é pouco, mas a CDN da Cloudflare, que fica na frente do site, já resolve boa parte desse problema. Além disso, o site tem pouquíssimos acessos, então esse limite não chega a ser um grande impeditivo.
+
+Nessa instância e2-micro, utilizei um docker-compose para subir os serviços necessários. Abaixo está uma versão simplificada do arquivo. Além do que está definido nele, também tenho rodando um Cloudflare DDNS. Pretendo documentar melhor esse deploy em um post futuro, entrando em detalhes do meu homelab utilizando Terraform.
+
+```yaml title="docker-compose.yaml"
+services:
+  personal-website:
+    image: ghcr.io/luisfadini/personal-website:latest
+    networks:
+      - traefik
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.enable=true"
+      - "traefik.http.routers.personal-website.rule=Host(`${DOMAIN}`) && !PathPrefix(`/watchtower`)"
+      - "traefik.http.routers.personal-website.entrypoints=web"
+      - "traefik.http.services.personal-website.loadbalancer.server.port=3000"
+
+  watchtower:
+    image: nickfedor/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_ROLLING_RESTART=true
+      - WATCHTOWER_UPDATE_ON_START=true
+      - WATCHTOWER_CLEANUP=true
+    networks:
+      - traefik
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  traefik:
+    image: traefik
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik"
+      - "--entrypoints.web.address=:80"
+    networks:
+      - traefik
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "traefik.enable=false"
+
+networks:
+  traefik:
+    name: traefik
+```
+
+Além disso, configurei workflows no GitHub para automatizar todo o processo de build e deploy. Sempre que ocorre um push na branch main, um workflow faz a build automática do container, publica a nova imagem e criando um release no Github.
+
+Em seguida, outro workflow é responsável por disparar a atualização no servidor, solicitando ao Watchtower que faça o pull da nova imagem e reinicie o container. Dessa forma, o site é atualizado de forma praticamente automática e em quase tempo real.
+
+Caso queira ver esses workflows em mais detalhes:
+- [Workflow de build](https://github.com/luisfadini/personal-website/blob/main/.github/workflows/build-and-publish.yaml)
+- [Workflow de update](https://github.com/luisfadini/personal-website/blob/main/.github/workflows/update-deployment.yaml)
 
 ---
 
 ## Conclusão
 
 Bom, talvez tenha ficado um pouco confuso esse post, então vou resumir em umas simples lista:
+
 - Svelte
 - SvelteKit
 - Tailwind

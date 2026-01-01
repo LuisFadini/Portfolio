@@ -17,7 +17,7 @@ import rehypeToc from '@jsdevtools/rehype-toc';
 
 const highlighter = await createHighlighter({
 	themes: ['dracula'],
-	langs: ['javascript', 'typescript', 'css', 'svelte', 'html', 'html', 'rust', 'json']
+	langs: ['javascript', 'typescript', 'css', 'svelte', 'html', 'html', 'rust', 'json', "dockerfile", "yaml", "terraform"]
 });
 
 function pushNode(node, filename, iconSelector) {
