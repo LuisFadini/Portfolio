@@ -1,6 +1,7 @@
 # VCS
 .git
 .gitignore
+.gitattributes
 
 # Editor
 .vscode
