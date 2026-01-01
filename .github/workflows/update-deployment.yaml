@@ -1,8 +1,9 @@
 name: Update deployment
 
 on:
-  registry_package:
-    types: [published]
+  release:
+    types:
+      - created
 
 jobs:
   update-deployment:
