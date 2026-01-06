@@ -29,7 +29,7 @@ jobs:
         run: |
           curl -X POST \
             -H "Authorization: Bearer $UPDATE_TOKEN" \
-            "$UPDATE_URL?image=luisfadini/personal-website"
+            "$UPDATE_URL?image=ghcr.io/luisfadini/personal-website"
 
       - name: Create GitHub deployment
         id: create_deployment
